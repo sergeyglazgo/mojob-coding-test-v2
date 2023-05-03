@@ -136,15 +136,15 @@ npm run serve
 
 ```
 I have used node version:
-v12.19.0
+v14.20.0
 I have used npm version:
-v6.14.8
+v6.14.17
 Javascript framework used:
 Vue
 If you did not use the given Vue project template, describe how can we run your code:
 x y z
 Do you have any other comments regarding your deliverable?
-x y z
+Added 'develop' branch
 Do you have any comments/feedback about the task we gave you?
 x y z
 ```
