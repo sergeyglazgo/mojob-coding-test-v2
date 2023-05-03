@@ -1,5 +1,5 @@
 import type { AxiosStatic } from 'axios'
-import type { IPage, PositionFunction } from '@/models/models'
+import type { IPage, JobListing, PositionFunction } from '@/models/models'
 
 export default class BaseApi {
   public axios!: AxiosStatic
@@ -15,9 +15,10 @@ export default class BaseApi {
       .get(`${this.baseUrl}job/position-functions/?page_size=100`)
       .then((response) => response.data)
 
-  /**
-   * TIP: Create a function called getJobListings
-   * Use our public api documentation to find out what endpoint to use
-   * https://test-api.mojob.io/public/docs/
-   */
+  public getJobListings = (pageSize: number, positionIDs?: number[]): Promise<IPage<JobListing>> => {
+    const url = `${this.baseUrl}job/listings/?page_size=${pageSize}&use_pagination=True`
+    return this.axios
+      .get(positionIDs?.length ? `${url}&position_functions=${positionIDs.join(',')}` : url)
+      .then((response) => response.data)
+  }
 }

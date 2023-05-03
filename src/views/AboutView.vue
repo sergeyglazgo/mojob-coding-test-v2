@@ -1,6 +1,5 @@
 <template>
   <div class="about">
-    <img alt="Vue logo" src="../assets/mojob_logo_on_white.png" />
     <h1>Mojob</h1>
     <h2>A recruitment software for service companies</h2>
 

@@ -4,9 +4,12 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="header">
+      <img id="logo" alt="Vue logo" src="./assets/mojob_logo_on_white.png" />
+      <div id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/about">About</router-link>
+      </div>
     </div>
     <router-view />
   </div>
@@ -20,7 +23,22 @@ import { RouterLink, RouterView } from 'vue-router'
   text-align: center;
   color: #2c3e50;
 }
+#header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90px;
+  max-width: 80%;
+  margin: auto;
+}
+#logo {
+  width: 150px;
+  height: 150px;
+  margin-right: auto;
+}
 #nav {
+  margin-right: auto;
+  transform: translateX(-50%);
   padding: 30px;
 }
 #nav a {

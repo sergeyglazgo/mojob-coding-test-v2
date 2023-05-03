@@ -1,17 +1,32 @@
 <script setup lang="ts">
 import BaseApi from '@/api-requests/api'
-import type { IPage, PositionFunction } from '@/models/models'
+import type { IPage, JobListing, PositionFunction } from '@/models/models'
 import { inject, onMounted, ref } from 'vue'
 import type { AxiosStatic } from 'axios'
 import JobFeed from '../components/JobFeed.vue'
 
 const mojobApi = ref<BaseApi | null>(null)
 const positionFunctionFilters = ref<PositionFunction[]>([])
+const jobListings = ref<JobListing[]>([])
 const axiosInstance = inject('axios') as AxiosStatic
+
+async function getListings(pageSize = 5, positionIDs = []) {
+  let response: IPage<JobListing>
+  if (pageSize) {
+    response = await mojobApi.value?.getJobListings(pageSize, positionIDs) || {}
+  } else {
+    response = await mojobApi.value?.getJobListings(Number.MAX_SAFE_INTEGER, positionIDs) || {}
+  }
+  if (response.results) {
+    jobListings.value = response.results
+  }
+}
 
 onMounted(async () => {
   mojobApi.value = new BaseApi('https://test-api.mojob.io/public/', axiosInstance)
   try {
+    await getListings()
+
     const jobLocationFiltersResponsePage: IPage<PositionFunction> =
       await mojobApi.value.getPositionFunctions()
     if (jobLocationFiltersResponsePage.results) {
@@ -30,6 +45,10 @@ onMounted(async () => {
 
 <template>
   <div class="home">
-    <job-feed :job-listings="[]" :position-functions="positionFunctionFilters" />
+    <job-feed
+      :job-listings="jobListings"
+      :position-functions="positionFunctionFilters"
+      @getListings="getListings"
+    />
   </div>
 </template>
