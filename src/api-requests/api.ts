@@ -15,10 +15,21 @@ export default class BaseApi {
       .get(`${this.baseUrl}job/position-functions/?page_size=100`)
       .then((response) => response.data)
 
-  public getJobListings = (pageSize: number, positionIDs?: number[]): Promise<IPage<JobListing>> => {
-    const url = `${this.baseUrl}job/listings/?page_size=${pageSize}&use_pagination=True`
+  public getJobListings = (
+    pageSize: number,
+    positionIDs?: number[],
+    usePagination = true
+  ): Promise<JobListing[]> => {
+    const pagination = usePagination ? 'True' : 'False'
+    let url = `${this.baseUrl}job/listings/?use_pagination=${pagination}`
+
+    if (usePagination) {
+      url += `&page_size=${pageSize}`
+    }
+    if (positionIDs?.length) {
+      url += `&position_functions=${positionIDs.join(',')}`
+    }
     return this.axios
-      .get(positionIDs?.length ? `${url}&position_functions=${positionIDs.join(',')}` : url)
-      .then((response) => response.data)
+      .get(url).then((response) => usePagination ? response.data.results : response.data)
   }
 }

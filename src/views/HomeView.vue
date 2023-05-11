@@ -11,15 +11,13 @@ const jobListings = ref<JobListing[]>([])
 const axiosInstance = inject('axios') as AxiosStatic
 
 async function getListings(pageSize = 5, positionIDs = []) {
-  let response: IPage<JobListing>
+  let response: JobListing[]
   if (pageSize) {
-    response = await mojobApi.value?.getJobListings(pageSize, positionIDs) || {}
+    response = await mojobApi.value?.getJobListings(pageSize, positionIDs) || []
   } else {
-    response = await mojobApi.value?.getJobListings(Number.MAX_SAFE_INTEGER, positionIDs) || {}
+    response = await mojobApi.value?.getJobListings(pageSize, positionIDs, false) || []
   }
-  if (response.results) {
-    jobListings.value = response.results
-  }
+  jobListings.value = response
 }
 
 onMounted(async () => {

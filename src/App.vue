@@ -32,6 +32,8 @@ import { RouterLink, RouterView } from 'vue-router'
   margin: auto;
 }
 #logo {
+  position: relative;
+  z-index: -1;
   width: 150px;
   height: 150px;
   margin-right: auto;

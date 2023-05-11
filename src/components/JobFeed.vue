@@ -139,7 +139,7 @@ const getListings = (isVisible?: boolean) => {
 .filters {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 6px;
+  padding: 10px 0;
 }
 .dot:after {
   content: '';
@@ -148,8 +148,7 @@ const getListings = (isVisible?: boolean) => {
   width: 6px;
   height: 6px;
   background-color: #757575;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-inline: 6px;
   margin-bottom: 2px;
 }
 </style>
